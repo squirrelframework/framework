@@ -2,8 +2,7 @@
 
 namespace Squirrel\Framework;
 
-use Squirrel\Finder\FinderInterface;
-use Squirrel\Routing\Router;
+use Squirrel\Context\ContextAware;
 
 /**
  * Main class for framework initialization.
@@ -11,13 +10,13 @@ use Squirrel\Routing\Router;
  * @package Squirrel
  * @author Valérian Galliat
  */
-class Kernel
+class Kernel extends ContextAware
 {
     const ENVIRONMENT_DEVELOPMENT = 0;
     const ENVIRONMENT_PRODUCTION = 1;
 
     /**
-     * @var int
+     * @var integer
      */
     protected $environment;
 
@@ -32,29 +31,17 @@ class Kernel
     protected $locale;
 
     /**
-     * @var Finder\FinderInterface
-     */
-    protected $finder;
-
-    /**
-     * @var Routing\Router
-     */
-    protected $router;
-
-    /**
      * Sets default values.
      */
-    public function __construct(FinderInterface $finder, Router $router)
+    public function __construct()
     {
         $this->setEnvironment(self::ENVIRONMENT_DEVELOPMENT);
         $this->setTimezone('Europe/London');
         $this->setLocale('en_GB');
-        $this->finder = $finder;
-        $this->router = $router;
     }
 
     /**
-     * @param int $environment
+     * @param integer $environment
      * @return Kernel
      */
     public function setEnvironment($environment)
@@ -64,7 +51,7 @@ class Kernel
     }
 
     /**
-     * @return int
+     * @return integer
      */
     public function getEnvironment()
     {
